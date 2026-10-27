@@ -218,3 +218,19 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+
+# Hugging Face training outputs
+test_trainer/
+saved_model/
+checkpoints/
+
+# Hugging Face cache
+.cache/
+
+# macOS
+.DS_Store
+
+# AWS credentials
+.aws/
+.env.*
