@@ -6,8 +6,9 @@ from transformers import (
     TrainingArguments,
     Trainer,
 )
-import load_dataset
-from tokenizer import create_subset, tokenize_dataset
+import os
+import src.load_dataset as load_dataset
+from src.tokenizer import create_subset, tokenize_dataset
 
 # Load accuracy as the evaluation metric.
 metric = evaluate.load("accuracy")
@@ -47,8 +48,13 @@ def train_model(train_dataset, eval_dataset):
 
     # Start fine-tuning.
     trainer.train()
+    # Save the fine-tuned model.
+    model_dir = os.environ.get("SM_MODEL_DIR", "./saved_model")
+    trainer.save_model(model_dir)
 
     return trainer
+
+
 
 if __name__ == "__main__":
     # Load the original Yelp dataset.

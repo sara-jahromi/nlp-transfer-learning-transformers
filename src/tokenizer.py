@@ -1,5 +1,5 @@
 from transformers import AutoTokenizer
-import load_dataset
+import src.load_dataset as load_dataset
 
 # Load the pretrained BERT tokenizer.
 # The tokenizer converts text into token IDs that BERT can process.
