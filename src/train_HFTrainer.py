@@ -8,7 +8,7 @@ from transformers import (
 )
 import os
 import src.load_dataset as load_dataset
-from src.tokenizer import create_subset, tokenize_dataset
+from .tokenizer import create_subset, tokenize_dataset
 
 # Load accuracy as the evaluation metric.
 metric = evaluate.load("accuracy")
