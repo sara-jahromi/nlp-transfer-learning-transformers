@@ -17,12 +17,24 @@ def tokenize_dataset(raw_dataset):
     # batched=True: Process multiple examples at once for efficiency.
     return raw_dataset.map(tokenize_fn, batched=True)
 
-#optional: you can create a smaller subset of full dataset to
-#  fine-tune the model to reduce the time it takes.
-def create_subset(raw_dataset, num_samples=1000):
-    small_train_dataset = raw_dataset["train"].shuffle(seed=42).select(range(num_samples))
-    small_test_dataset = raw_dataset["test"].shuffle(seed=42).select(range(num_samples))
-    return small_train_dataset, small_test_dataset
+# #optional: you can create a smaller subset of full dataset to
+# #  fine-tune the model to reduce the time it takes.
+# def create_subset(raw_dataset, num_samples=1000):
+#     small_train_dataset = raw_dataset["train"].shuffle(seed=42).select(range(num_samples))
+#     small_test_dataset = raw_dataset["test"].shuffle(seed=42).select(range(num_samples))
+#     return small_train_dataset, small_test_dataset
+def create_subset(raw_dataset, num_train=20000, num_val=2000):
+    # Shuffle the original training dataset for reproducibility.
+    shuffled_train = raw_dataset["train"].shuffle(seed=42)
+
+    # Select non-overlapping subsets for training and validation.
+    train_dataset = shuffled_train.select(range(num_train))
+    val_dataset = shuffled_train.select(
+        range(num_train, num_train + num_val)
+    )
+
+    return train_dataset, val_dataset
+
 
 if __name__ == "__main__":
     # Load the raw dataset from Hugging Face.

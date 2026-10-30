@@ -32,10 +32,28 @@ def train_model(train_dataset, eval_dataset):
     )
 
     # Configure training and evaluation.
+    # Default training arguments for the Trainer class.
+    # training_args = TrainingArguments(
+    #     output_dir="test_trainer",
+    #     eval_strategy="epoch"
+    # )
+
+
+    # Custom training arguments for SageMaker.
     training_args = TrainingArguments(
-        output_dir="test_trainer",
-        eval_strategy="epoch"
+    output_dir="test_trainer",
+    num_train_epochs=3,
+    per_device_train_batch_size=16,
+    per_device_eval_batch_size=32,
+    learning_rate=2e-5,
+    eval_strategy="epoch",
+    save_strategy="epoch",
+    load_best_model_at_end=True,
+    metric_for_best_model="accuracy",
+    greater_is_better=True,
+    report_to="none"
     )
+
 
     # Initialize the trainer.
     trainer = Trainer(

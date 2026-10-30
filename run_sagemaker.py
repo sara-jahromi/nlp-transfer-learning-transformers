@@ -55,7 +55,7 @@ model_trainer = ModelTrainer(
     source_code=source_code,
     compute=compute,
     stopping_condition=StoppingCondition(
-        max_runtime_in_seconds=3600
+        max_runtime_in_seconds=7200
     )
 )
 
